@@ -7,23 +7,30 @@ public class TennisGame3 implements TennisGame {
     private String player1Name;
     private String player2Name;
 
+    private static final String[] score = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
+
     public TennisGame3(String player1Name, String player2Name) {
         this.player1Name = player1Name;
         this.player2Name = player2Name;
     }
 
     public String getScore() {
-        String s;
-        if (player2Score < 4 && player1Score < 4 && !(player2Score + player1Score == 6)) {
-            String[] p = new String[]{"Love", "Fifteen", "Thirty", "Forty"};
-            s = p[player2Score];
-            return (player2Score == player1Score) ? s + "-All" : s + "-" + p[player1Score];
+        if (player2Score < 4 && player1Score < 4 && !isTotalSix()) {
+            return (player2Score == player1Score) ? score[player2Score] + "-All" : score[player2Score] + "-" + score[player1Score];
         } else {
             if (player2Score == player1Score)
                 return "Deuce";
-            s = player2Score > player1Score ? player1Name : player2Name;
-            return ((player2Score - player1Score)*(player2Score - player1Score) == 1) ? "Advantage " + s : "Win for " + s;
+            String name = player2Score > player1Score ? player1Name : player2Name;
+            return isAdvantage() ? "Advantage " + name : "Win for " + name;
         }
+    }
+
+    private boolean isAdvantage() {
+        return (player2Score - player1Score) * (player2Score - player1Score) == 1;
+    }
+
+    private boolean isTotalSix() {
+        return player2Score + player1Score == 6;
     }
 
     public void wonPoint(String playerName) {
