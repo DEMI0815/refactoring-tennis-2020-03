@@ -19,4 +19,16 @@ public class Player {
     public void wonPoint() {
         score++;
     }
+
+    public boolean isScoreEqualsWith(Player player) {
+        return score == player.score;
+    }
+
+    public boolean doesAdvantage(Player player) {
+        return score >= 4 && score - player.score == 1;
+    }
+
+    public boolean doesWin(Player player) {
+        return score >= 4 && score - player.score >= 1;
+    }
 }

@@ -22,29 +22,22 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
-        if (isScoreEquals()) {
+        if (player1.isScoreEqualsWith(player2)) {
             return scoreForEquals();
         }
-        if (isAtLeastOneMoreThan4()) {
-            return scoreForAtLeastOneMoreThan4();
-        }
-        return scoreForBothBelow4();
-    }
-
-    private String scoreForAtLeastOneMoreThan4() {
-        if (doesPlayer1HasAdvantage()) {
+        if (player1.doesAdvantage(player2)) {
             return scoreForAdvantage(player1);
         }
-        if (doesPlayer2HasAdvantage()) {
+        if (player2.doesAdvantage(player1)) {
             return scoreForAdvantage(player2);
         }
-        if (doesPlayer1Win()) {
+        if (player1.doesWin(player2)) {
             return scoreForWin(player1);
         }
-        if (doesPlayer2Win()) {
+        if (player2.doesWin(player1)) {
             return scoreForWin(player2);
         }
-        return "";
+        return scoreForBothBelow4();
     }
 
     private String scoreForBothBelow4() {
@@ -59,34 +52,8 @@ public class TennisGameImpl implements TennisGame {
         return "Advantage " + player.getName();
     }
 
-    private boolean doesPlayer1Win() {
-        return player1.getScore() - player2.getScore() >= 2;
-    }
-
-    private boolean doesPlayer2Win() {
-        return player2.getScore() - player1.getScore() >= 2;
-    }
-
-    private boolean doesPlayer2HasAdvantage() {
-        return player1.getScore() - player2.getScore() == -1;
-    }
-
-    private boolean doesPlayer1HasAdvantage() {
-        return player1.getScore() - player2.getScore() == 1;
-    }
-
-    private boolean isAtLeastOneMoreThan4() {
-        return player1.getScore() >= 4 || player2.getScore() >= 4;
-    }
-
     private String scoreForEquals() {
-        String score;
-        score = player1.getScore() > 2 ? "Deuce" : getScoreName(player1.getScore()) + "-All";
-        return score;
-    }
-
-    private boolean isScoreEquals() {
-        return player1.getScore() == player2.getScore();
+        return player1.getScore() > 2 ? "Deuce" : getScoreName(player1.getScore()) + "-All";
     }
 
     private String getScoreName(int score) {
