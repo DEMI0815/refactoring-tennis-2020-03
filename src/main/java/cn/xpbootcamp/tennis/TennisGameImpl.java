@@ -21,19 +21,19 @@ public class TennisGameImpl implements TennisGame {
 
     public String getScore() {
         if (player1.isScoreEqualsWith(player2)) {
-            return new TiedScore(player1).state();
+            return new TiedScore(player1, player2).state();
         }
         if (player1.doesAdvantage(player2)) {
-            return new AdvantageScore(player1).state();
+            return new AdvantageScore(player1, player2).state();
         }
         if (player2.doesAdvantage(player1)) {
-            return new AdvantageScore(player2).state();
+            return new AdvantageScore(player2, player2).state();
         }
         if (player1.doesWin(player2)) {
-            return new WinScore(player1).state();
+            return new WinScore(player1, player2).state();
         }
         if (player2.doesWin(player1)) {
-            return new WinScore(player2).state();
+            return new WinScore(player1, player2).state();
         }
         return new RegularScore(player1, player2).state();
     }

@@ -2,18 +2,14 @@ package cn.xpbootcamp.tennis;
 
 import java.util.Arrays;
 
-public class TiedScore {
-    private Player player;
+public class TiedScore extends AbstractScore {
 
-    public TiedScore(Player player) {
-        this.player = player;
+    public TiedScore(Player player1, Player player2) {
+        super(player1, player2);
     }
 
     public String state() {
-        return player.getScore() > 2 ? "Deuce" : getScoreName(player.getScore()) + "-All";
+        return player1.getScore() > 2 ? "Deuce" : getScoreName(player1.getScore()) + "-All";
     }
 
-    private String getScoreName(int score) {
-        return Arrays.asList("Love", "Fifteen", "Thirty", "Forty").get(score);
-    }
 }
