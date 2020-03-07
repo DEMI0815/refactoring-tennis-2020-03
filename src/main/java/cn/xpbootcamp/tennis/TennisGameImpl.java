@@ -1,6 +1,9 @@
 
 package cn.xpbootcamp.tennis;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class TennisGameImpl implements TennisGame {
 
     private Player player1;
@@ -20,22 +23,17 @@ public class TennisGameImpl implements TennisGame {
     }
 
     public String getScore() {
-        if (player1.isScoreEqualsWith(player2)) {
-            return new TiedScore(player1, player2).state();
-        }
-        if (player1.doesAdvantage(player2)) {
-            return new AdvantageScore(player1, player2).state();
-        }
-        if (player2.doesAdvantage(player1)) {
-            return new AdvantageScore(player2, player2).state();
-        }
-        if (player1.doesWin(player2)) {
-            return new WinScore(player1, player2).state();
-        }
-        if (player2.doesWin(player1)) {
-            return new WinScore(player1, player2).state();
-        }
-        return new RegularScore(player1, player2).state();
+        return generatePossibleScores().stream().filter(AbstractScore::isApplied)
+                .findFirst().orElse(new EmptyScore(player1, player2)).state();
+    }
+
+    private List<AbstractScore> generatePossibleScores() {
+        return Arrays.asList(
+                new TiedScore(player1, player2),
+                new AdvantageScore(player1, player2),
+                new WinScore(player1, player2),
+                new RegularScore(player1, player2)
+        );
     }
 
 }

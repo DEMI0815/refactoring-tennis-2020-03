@@ -11,6 +11,8 @@ public abstract class AbstractScore {
         this.player2 = player2;
     }
 
+    public abstract boolean isApplied();
+
     public abstract String state();
 
     static String getScoreName(int score) {
